@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+.env
+var/
+*.mp3
+*.lrc
+*.srt
+*.ttml
+*.ass
+test/
+vid-test/
