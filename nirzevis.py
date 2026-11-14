@@ -836,11 +836,18 @@ def run_whisper(audio_file, whisper_cli, model_path, language, dtw_model,
 
     failed_items = []
     if not skip_translation:
-        failed_items = translate_segments(
-            records, llm_base_url, llm_model, llm_api_key, batch_size,
-            cache_path=translations_cache, failed_report_path=failed_report,
-            target_language=target_language, use_cache=not refresh_translations,
-        )
+        answer = input(
+            "\nDo you want to proceed with translating the generated text? [y/N]: "
+        ).strip().lower()
+    
+        if answer in ('y', 'yes'):
+            failed_items = translate_segments(
+                records, llm_base_url, llm_model, llm_api_key, batch_size,
+                cache_path=translations_cache, failed_report_path=failed_report,
+                target_language=target_language, use_cache=not refresh_translations,
+            )
+        else:
+            print("Translation skipped by user.")
 
     generate_word_lrc(records, lrc_file)
     generate_word_ttml(records, ttml_file, target_language)
